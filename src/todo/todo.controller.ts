@@ -22,7 +22,9 @@ export class TodoController {
 
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Todo | null> {
-    return await this.todoService.findById(id);
+    const todo = await this.todoService.findById(id);
+
+    return todo;
   }
 
   @Post()

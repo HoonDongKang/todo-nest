@@ -1,5 +1,11 @@
+import { IsString } from 'class-validator';
+
 export class CreateTodoDto {
+  @IsString()
   name: string;
-  descrption: string;
+
+  @IsString()
+  description: string;
+
   createdAt: Date;
 }

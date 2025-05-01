@@ -10,6 +10,7 @@ async function bootstrap() {
   const tree = SpelunkerModule.explore(app);
   const root = SpelunkerModule.graph(tree);
   const edges = SpelunkerModule.findGraphEdges(root);
+  console.log(tree);
   console.log('graph LR');
   const mermaidEdges = edges.map(
     ({ from, to }) => `  ${from.module.name}-->${to.module.name}`,

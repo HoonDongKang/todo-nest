@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { TodoModule } from './todo/todo.module';
+import { CountingModule } from './counting/counting.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TodoModule } from './todo/todo.module';
       synchronize: true,
     }),
     TodoModule,
+    CountingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

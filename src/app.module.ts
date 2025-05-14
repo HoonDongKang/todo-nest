@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { TodoModule } from './todo/todo.module';
 import { CountingModule } from './counting/counting.module';
+import { UserModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CountingModule } from './counting/counting.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    UserModule,
     TodoModule,
     CountingModule,
   ],

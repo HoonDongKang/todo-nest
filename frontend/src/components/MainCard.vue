@@ -1,6 +1,6 @@
 <template>
-  <Login v-if="isLogin" @change="changeMode" />
-  <Register v-else @change="changeMode" />
+  <Login v-if="isLogin" @updateMode="changeMode" />
+  <Register v-else @updateMode="changeMode" />
 </template>
 <script setup>
 import { ref } from 'vue';

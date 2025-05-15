@@ -8,7 +8,7 @@
       <v-form>
         <v-text-field
           label="아이디"
-          prepend-inner-icon="mdi-email"
+          prepend-inner-icon="mdi-account"
           variant="outlined"
           placeholder="아이디를 입력하세요"
         ></v-text-field>
@@ -40,7 +40,7 @@
         variant="text"
         color="primary"
         density="comfortable"
-        @click="$emit('change')"
+        @click="$emit('updateMode')"
         >회원가입</v-btn
       >
     </v-card-actions>

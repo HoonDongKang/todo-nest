@@ -11,13 +11,13 @@ export class User {
   id: number;
 
   @Column()
-  usernmae: string;
+  username: string;
 
   @Column()
   password: string;
 
   @Column()
-  nicknmae: string;
+  nickname: string;
 
   @CreateDateColumn()
   createdAt: Date;

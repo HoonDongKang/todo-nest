@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { TodoModule } from './todo/todo.module';
-import { CountingModule } from './counting/counting.module';
-import { UserModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { TodoModule } from './api/todo/todo.module';
+import { CountingModule } from './api/counting/counting.module';
+import { UserModule } from './api/users/users.module';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [

@@ -7,6 +7,7 @@
     <v-card-text>
       <v-form>
         <v-text-field
+          v-model:model-value="form.username"
           label="아이디"
           prepend-inner-icon="mdi-account"
           variant="outlined"
@@ -14,21 +15,25 @@
         ></v-text-field>
 
         <v-text-field
+          v-model:model-value="form.password"
           label="비밀번호"
           prepend-inner-icon="mdi-lock"
           variant="outlined"
           placeholder="비밀번호를 입력하세요"
           type="password"
+          @keydown.enter="login"
         ></v-text-field>
 
-        <div class="d-flex justify-space-between align-center mb-4">
+        <!-- <div class="d-flex justify-space-between align-center mb-4">
           <v-checkbox label="로그인 상태 유지" hide-details></v-checkbox>
           <v-btn variant="text" color="primary" density="compact"
             >비밀번호 찾기</v-btn
           >
-        </div>
+        </div> -->
 
-        <v-btn color="primary" block size="large" class="mt-2"> 로그인 </v-btn>
+        <v-btn color="primary" block size="large" class="mt-2" @click="login">
+          로그인
+        </v-btn>
       </v-form>
     </v-card-text>
 
@@ -46,3 +51,20 @@
     </v-card-actions>
   </v-card>
 </template>
+<script setup>
+import { api } from '@/api';
+import { ref } from 'vue';
+
+const form = ref({
+  username: '',
+  password: '',
+});
+
+const login = async () => {
+  try {
+    await api.auth.login(form.value);
+  } catch (error) {
+    console.error(error);
+  }
+};
+</script>

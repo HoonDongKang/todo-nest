@@ -1,12 +1,18 @@
 import { $axios } from '@/plugins/axios';
 
+interface UserDto {
+  username: string;
+  password: string;
+  nickname: string;
+}
+
 const auth = {
-  register: (form: {
-    username: string;
-    password: string;
-    nickname: string;
-  }) => {
+  register: (form: UserDto) => {
     return $axios.post('/auth/register', form);
+  },
+
+  login: (form: Partial<UserDto>) => {
+    return $axios.post('/auth/login', form);
   },
 };
 

@@ -43,7 +43,7 @@ $axios.interceptors.response.use(
           console.error('서버 오류가 발생했습니다.');
           break;
         default:
-          console.error(`HTTP 에러: ${error.response.status}`);
+          console.error(error.response?.data?.message);
       }
     } else if (error.request) {
       console.error('서버에서 응답이 없습니다.');

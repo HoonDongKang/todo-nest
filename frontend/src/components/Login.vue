@@ -12,6 +12,7 @@
           prepend-inner-icon="mdi-account"
           variant="outlined"
           placeholder="아이디를 입력하세요"
+          @keydown.enter="login"
         ></v-text-field>
 
         <v-text-field
@@ -64,6 +65,7 @@ const login = async () => {
   try {
     await api.auth.login(form.value);
   } catch (error) {
+    alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.');
     console.error(error);
   }
 };

@@ -14,6 +14,8 @@ export class AuthController {
 
   @Post('/login')
   async login(@Body() loginUserDto: LoginUserDto) {
-    return await this.authService.login(loginUserDto);
+    const user = await this.authService.validateUser(loginUserDto);
+    // JWT
+    return; // token
   }
 }

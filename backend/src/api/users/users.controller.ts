@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from 'src/database/user.entity';
@@ -8,7 +16,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async find() {}
+  async findByUsername(@Query('username') username: string) {
+    return await this.userService.findByUsername(username);
+  }
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User | null> {

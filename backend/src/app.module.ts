@@ -6,6 +6,7 @@ import { TodoModule } from './api/todo/todo.module';
 import { CountingModule } from './api/counting/counting.module';
 import { UserModule } from './api/users/users.module';
 import { AuthModule } from './api/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { AuthModule } from './api/auth/auth.module';
       synchronize: true,
     }),
     AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['../.env'],
+    }),
     CountingModule,
     TodoModule,
     UserModule,

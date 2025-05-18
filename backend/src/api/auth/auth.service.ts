@@ -8,10 +8,16 @@ import { User } from 'src/database/user.entity';
 import { CreateUserDto } from 'src/api/users/dto/create-user.dto';
 import { LoginUserDto } from '../users/dto/login-user.dto';
 import { UserService } from '../users/users.service';
+// import { JwtService } from '@nestjs/jwt';
+import { JwtService } from '../jwt/jwt.service';
+import { TokenUserDto } from '../users/dto/token-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async register(createUserDto: CreateUserDto): Promise<User | null> {
     const form = {
@@ -33,5 +39,21 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
 
     return user;
+  }
+  async login(loginUserDto: LoginUserDto) {
+    const user = await this.validateUser(loginUserDto);
+
+    const payload: TokenUserDto = {
+      sub: user.id,
+      username: user.username,
+      nickname: user.nickname,
+    };
+
+    const accessToken = this.jwtService.generateAccessToken(payload);
+    const refreshToken = this.jwtService.generateRefreshToken({
+      sub: payload.sub,
+    });
+
+    return { accessToken, refreshToken };
   }
 }

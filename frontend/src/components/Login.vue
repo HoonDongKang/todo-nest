@@ -54,7 +54,10 @@
 </template>
 <script setup>
 import { api } from '@/api';
+import { useAuthStore } from '@/stores/auth';
 import { ref } from 'vue';
+
+const authStore = useAuthStore();
 
 const form = ref({
   username: '',
@@ -63,7 +66,9 @@ const form = ref({
 
 const login = async () => {
   try {
-    const { refreshToken, AccessToken } = await api.auth.login(form.value);
+    const { refreshToken, accessToken } = await api.auth.login(form.value);
+
+    authStore.login({ accessToken, refreshToken });
   } catch (error) {
     alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.');
     console.error(error);

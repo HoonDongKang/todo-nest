@@ -1,7 +1,9 @@
 import { auth } from './auth';
+import { me } from './me';
 
 export const api = {
   auth,
+  me,
 };
 
 export default {

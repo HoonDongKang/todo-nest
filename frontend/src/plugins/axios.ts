@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
 
 const $axios = axios.create({
   baseURL: 'http://localhost:3000/api',
@@ -11,10 +12,12 @@ const $axios = axios.create({
 
 $axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    const authStore = useAuthStore();
+    const token = authStore.accessToken?.value;
+    // console.log(authStore.$onAction(setAccessToken('123')));
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
 
     return config;
   },
@@ -25,7 +28,7 @@ $axios.interceptors.request.use(
 
 $axios.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   (error) => {
     if (error.response) {

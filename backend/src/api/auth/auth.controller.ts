@@ -13,6 +13,6 @@ export class AuthController {
 
   @Post('/login')
   async login(@Body() loginUserDto: LoginUserDto) {
-    const token = await this.authService.login(loginUserDto);
+    return await this.authService.login(loginUserDto);
   }
 }

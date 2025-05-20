@@ -7,6 +7,7 @@ import { CountingModule } from './api/counting/counting.module';
 import { UserModule } from './api/users/users.module';
 import { AuthModule } from './api/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { MeModule } from './api/me/me.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: ['../.env'],
     }),
     CountingModule,
+    MeModule,
     TodoModule,
     UserModule,
   ],

@@ -3,7 +3,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { $bcrypt } from 'src/common/decorators/plugins/bcrypt';
+import { $bcrypt } from 'src/common/plugins/bcrypt';
 import { User } from 'src/database/user.entity';
 import { CreateUserDto } from 'src/api/users/dto/create-user.dto';
 import { LoginUserDto } from '../users/dto/login-user.dto';

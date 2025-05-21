@@ -19,7 +19,9 @@ export const useAuthStore = defineStore('auth', () => {
     setAccessToken(at);
     setRefreshToken(rt);
 
-    await api.me.get();
+    const me = await api.me.get();
+
+    user.value = me;
   }
 
   return { user, accessToken, refreshToken, login };

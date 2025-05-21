@@ -13,11 +13,11 @@ const $axios = axios.create({
 $axios.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore();
-    const token = authStore.accessToken?.value;
-    // console.log(authStore.$onAction(setAccessToken('123')));
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = authStore?.accessToken || null;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     return config;
   },

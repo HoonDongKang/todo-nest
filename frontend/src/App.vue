@@ -16,7 +16,8 @@ import MainCard from './components/MainCard.vue';
   </header>
 
   <main>
-    <MainCard />
+    <!-- <MainCard /> -->
+    <router-view />
   </main>
 </template>
 

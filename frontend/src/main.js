@@ -8,6 +8,7 @@ import * as directives from 'vuetify/directives';
 import App from './App.vue';
 import axiosPlugin from './plugins/axios';
 import apiPlugin from './api';
+import router from '../router';
 
 const pinia = createPinia();
 const vuetify = createVuetify({
@@ -18,6 +19,7 @@ const vuetify = createVuetify({
 createApp(App)
   .use(pinia)
   .use(vuetify)
+  .use(router)
   .use(axiosPlugin)
   .use(apiPlugin)
   .mount('#app');

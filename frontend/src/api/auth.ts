@@ -14,6 +14,10 @@ const auth = {
   login: (form: Partial<UserDto>) => {
     return $axios.post('/auth/login', form);
   },
+
+  refresh: () => {
+    return $axios.post('/auth/refresh');
+  },
 };
 
 export { auth };

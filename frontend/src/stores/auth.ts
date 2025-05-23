@@ -11,18 +11,22 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken.value = token;
   }
 
-  function setRefreshToken(token: string) {
-    refreshToken.value = token;
+  async function refreshAccessToken() {
+    const res = await api.auth.refresh();
   }
 
-  async function login({ accessToken: at, refreshToken: rt }) {
-    setAccessToken(at);
-    setRefreshToken(rt);
+  async function login({ accessToken: at }) {
+    // setAccessToken(at);
 
     const me = await api.me.get();
 
     user.value = me;
   }
 
-  return { user, accessToken, refreshToken, login };
+  function logout() {
+    this.user = {};
+    this.accessToken = null;
+  }
+
+  return { user, accessToken, refreshToken, login, logout, setAccessToken };
 });

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -55,5 +56,25 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async refreshAccessToken(refreshToken: string): Promise<string> {
+    let payload: any;
+    try {
+      payload = this.jwtService.verify(refreshToken);
+    } catch (err) {
+      throw new UnauthorizedException('INVALID_REFRESH_TOKEN');
+    }
+
+    const user = await this.userService.findById(payload.sub);
+    if (!user) throw new NotFoundException('User not found');
+
+    const atPayload: TokenUserDto = {
+      sub: user.id,
+      username: user.username,
+      nickname: user.nickname,
+    };
+
+    return this.jwtService.generateAccessToken(atPayload);
   }
 }

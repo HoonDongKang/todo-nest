@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { api } from '@/api';
+import { useRouter } from 'vue-router';
 
 const $axios = axios.create({
   baseURL: 'http://localhost:3000/api',
   timeout: 10000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -13,10 +16,10 @@ const $axios = axios.create({
 $axios.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore();
-    const token = authStore?.accessToken || null;
+    const accessToken = authStore?.accessToken || null;
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -30,11 +33,33 @@ $axios.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (error) => {
+  async (error) => {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          localStorage.removeItem('token');
+          const auth = useAuthStore();
+          const router = useRouter();
+          const originalRequest = error.config;
+
+          if (!originalRequest._retry) {
+            originalRequest._retry = true;
+
+            try {
+              const accessToken = (await api.auth.refresh()).data;
+
+              auth.setAccessToken(accessToken);
+              originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+              return $axios(originalRequest);
+            } catch (e) {
+              if (error.response?.data?.message === 'INVALID_REFRESH_TOKEN') {
+                auth.logout();
+                router.push('/');
+              }
+              return Promise.reject(e);
+            }
+          }
+
           break;
         case 403:
           console.error('접근 권한이 없습니다.');

@@ -24,8 +24,9 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
   if (to.meta?.requiredAuth && !authStore.accessToken) {
-    alert('로그인이 필요합니다.');
-    return next('/');
+    console.error('2');
+    // alert('로그인이 필요합니다.');
+    // return next('/');
   }
 
   next();

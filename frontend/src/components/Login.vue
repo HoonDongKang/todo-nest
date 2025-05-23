@@ -70,7 +70,7 @@ const login = async () => {
   try {
     const { refreshToken, accessToken } = await api.auth.login(form.value);
 
-    authStore.login({ accessToken, refreshToken });
+    await authStore.login({ accessToken, refreshToken });
 
     router.push('/todos');
   } catch (error) {

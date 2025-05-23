@@ -13,15 +13,13 @@ export class TodoService {
     return await this.todoRepo.find();
   }
 
-  async findById(id: string): Promise<Todo | null> {
-    const todo = await this.todoRepo.findOne({
-      where: { id: +id },
+  async findByUser(id: string): Promise<Todo[]> {
+    const todos = await this.todoRepo.find({
+      where: { _user: +id },
     });
+    // if (!todo) throw new NotFoundException('Todo Not Found');
 
-    console.log(todo);
-    if (!todo) throw new NotFoundException('Todo Not Found');
-
-    return todo;
+    return todos;
   }
 
   async create(createTodoDto: CreateTodoDto): Promise<Todo> {

@@ -5,18 +5,13 @@ import { api } from '@/api';
 export const useAuthStore = defineStore('auth', () => {
   const user = ref({});
   const accessToken = ref(null);
-  const refreshToken = ref(null);
 
   function setAccessToken(token: string) {
     accessToken.value = token;
   }
 
-  async function refreshAccessToken() {
-    const res = await api.auth.refresh();
-  }
-
   async function login({ accessToken: at }) {
-    // setAccessToken(at);
+    setAccessToken(at);
 
     const me = await api.me.get();
 
@@ -28,5 +23,5 @@ export const useAuthStore = defineStore('auth', () => {
     this.accessToken = null;
   }
 
-  return { user, accessToken, refreshToken, login, logout, setAccessToken };
+  return { user, accessToken, login, logout, setAccessToken };
 });

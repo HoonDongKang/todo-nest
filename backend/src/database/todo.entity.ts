@@ -11,6 +11,9 @@ export class Todo {
   id: number;
 
   @Column()
+  _user: number;
+
+  @Column()
   name: string;
 
   @Column()

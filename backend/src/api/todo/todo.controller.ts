@@ -6,12 +6,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { Todo } from 'src/database/todo.entity';
+import { JwtGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('todo')
+@UseGuards(JwtGuard)
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
@@ -21,10 +24,10 @@ export class TodoController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<Todo | null> {
-    const todo = await this.todoService.findById(id);
+  async findByUser(@Param('id') id: string): Promise<Todo[]> {
+    const todos = await this.todoService.findByUser(id);
 
-    return todo;
+    return todos;
   }
 
   @Post()

@@ -1,9 +1,11 @@
 import { auth } from './auth';
 import { me } from './me';
+import { todo } from './todos';
 
 export const api = {
   auth,
   me,
+  todo,
 };
 
 export default {

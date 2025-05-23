@@ -11,21 +11,20 @@
 import { onMounted, ref } from 'vue';
 import { api } from '@/api';
 import { useAuthStore } from '@/stores/auth';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const auth = useAuthStore();
-const router = useRoute();
+const router = useRouter();
 const user = auth?.user;
 
 const todos = ref([]);
 
 const getTodos = async () => {
-  if (!user) {
-    router.go(-1);
-    return;
-  }
-
-  todos.value = await api.todo.get(user.id);
+  // if (!user?.id) {
+  //   router.go(-1);
+  //   return;
+  // }
+  // todos.value = await api.todo.get(user.id);
 };
 
 onMounted(() => {

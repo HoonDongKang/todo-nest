@@ -1,3 +1,4 @@
+import api from '@/api';
 import MainCard from '@/components/MainCard.vue';
 import Todo from '@/components/Todo.vue';
 import { useAuthStore } from '@/stores/auth';
@@ -20,15 +21,21 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
 
   if (to.meta?.requiredAuth && !authStore.accessToken) {
-    alert('로그인이 필요합니다.');
-    return next('/');
+    try {
+      await authStore.refreshAccessToken();
+
+      return next();
+    } catch (e) {
+      alert('로그인이 필요합니다.');
+      return next('/');
+    }
   }
 
-  next();
+  return next();
 });
 
 export default router;

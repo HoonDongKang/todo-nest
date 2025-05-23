@@ -15,7 +15,7 @@ const auth = {
     return $axios.post('/auth/login', form);
   },
 
-  refresh: () => {
+  refresh: async (): Promise<string> => {
     return $axios.post('/auth/refresh');
   },
 };

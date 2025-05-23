@@ -45,11 +45,10 @@ $axios.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-              const accessToken = (await api.auth.refresh()).data;
+              await auth.refreshAccessToken();
 
-              auth.setAccessToken(accessToken);
+              const accessToken = auth.accessToken;
               originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-
               return $axios(originalRequest);
             } catch (e) {
               if (error.response?.data?.message === 'INVALID_REFRESH_TOKEN') {

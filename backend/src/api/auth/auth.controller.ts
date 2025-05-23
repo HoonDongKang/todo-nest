@@ -40,9 +40,10 @@ export class AuthController {
   @Post('/refresh')
   async refresh(@Req() request: Request) {
     const refreshToken: string | null = request.cookies?.['refreshToken'];
-    if (!refreshToken) throw new BadRequestException('Refresh token missing');
+    if (!refreshToken) throw new BadRequestException('Login Required');
 
     const accessToken = await this.authService.refreshAccessToken(refreshToken);
+
     return accessToken;
   }
 }

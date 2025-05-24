@@ -10,11 +10,18 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken.value = token;
   }
 
+  async function setMe() {
+    const me = await api.me.get();
+
+    user.value = me;
+  }
+
   async function refreshAccessToken() {
     try {
       const accessToken = await api.auth.refresh();
 
-      await login({ accessToken });
+      setAccessToken(accessToken);
+      // await setMe();
     } catch (e) {
       throw new Error();
     }
@@ -22,10 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login({ accessToken: at }) {
     setAccessToken(at);
-
-    const me = await api.me.get();
-
-    user.value = me;
+    await setMe();
   }
 
   function logout() {
@@ -33,5 +37,5 @@ export const useAuthStore = defineStore('auth', () => {
     this.accessToken = null;
   }
 
-  return { user, accessToken, login, logout, refreshAccessToken };
+  return { user, accessToken, login, logout, setMe, refreshAccessToken };
 });

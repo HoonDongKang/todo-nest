@@ -14,7 +14,7 @@ export class Todo {
   _user: number;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
   description: string;

@@ -46,6 +46,7 @@ $axios.interceptors.response.use(
 
             try {
               await auth.refreshAccessToken();
+              await auth.setMe();
 
               const accessToken = auth.accessToken;
               originalRequest.headers.Authorization = `Bearer ${accessToken}`;
